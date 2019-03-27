@@ -9,10 +9,14 @@ class CalculatorViewModel(val calculator: RestaurantCalculator = RestaurantCalcu
     var inputTipPercentage = ""
     var tipCalculation = TipCalculation()
 
-    fun calculateTio() {
+    fun calculateTip() {
 
         val checkAmount = inputCheckAmount.toDoubleOrNull()
-        val tipPct :
+        val tipPct = inputTipPercentage.toIntOrNull()
+
+        if(checkAmount != null && tipPct != null){
+            tipCalculation = calculator.calculateTip(checkAmount, tipPct)
+        }
 
     }
 
