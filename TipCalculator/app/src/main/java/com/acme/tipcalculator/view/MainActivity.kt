@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.vm = CalculatorViewModel()
+        binding.vm = CalculatorViewModel(application)
 
 
         setSupportActionBar(binding.toolbar)
