@@ -39,7 +39,7 @@ class CalculatorViewModelTest {
         calculatorViewModel.inputCheckAmount = "10.00"
         calculatorViewModel.inputTipPercentage = "15"
 
-        val stub = TipCalculation(10.00, 15, 1.50, 11.5)
+        val stub = TipCalculation("Pancake Shack", 10.00, 15, 1.50, 11.5)
         `when`(mockCalculator.calculateTip(10.00, 15)).thenReturn(stub)
         stubResource(10.0, "$10.00")
         stubResource(1.5, "$1.50")
