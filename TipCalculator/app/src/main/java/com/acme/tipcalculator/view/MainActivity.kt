@@ -1,25 +1,27 @@
 package com.acme.tipcalculator.view
 
-import android.databinding.DataBindingUtil
+import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil.setContentView
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+
 import android.support.v7.app.AppCompatActivity;
+
+
 import com.acme.tipcalculator.R
-import com.acme.tipcalculator.databinding.ActivityMainBinding
+
 import com.acme.tipcalculator.viewmodel.CalculatorViewModel
 
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding : ActivityMainBinding
+    lateinit var binding : com.acme.tipcalculator.databinding.MainActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.vm = CalculatorViewModel(application)
+        binding = setContentView(this, R.layout.main_activity)
+        binding.vm = ViewModelProviders.of(this).get(CalculatorViewModel::class.java)
 
 
         setSupportActionBar(binding.toolbar)

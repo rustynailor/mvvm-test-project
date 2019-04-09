@@ -6,7 +6,8 @@ import com.acme.tipcalculator.R
 import com.acme.tipcalculator.model.RestaurantCalculator
 import com.acme.tipcalculator.model.TipCalculation
 
-class CalculatorViewModel(val app: Application, val calculator: RestaurantCalculator = RestaurantCalculator() ) : BaseObservable() {
+class CalculatorViewModel @JvmOverloads constructor(
+    app: Application, val calculator: RestaurantCalculator = RestaurantCalculator() ) : ObservableViewModel(app) {
 
     var inputCheckAmount = ""
     var inputTipPercentage = ""
@@ -22,9 +23,9 @@ class CalculatorViewModel(val app: Application, val calculator: RestaurantCalcul
 
     private fun updateOutputs(tc : TipCalculation){
 
-        outputCheckAmount = app.getString(R.string.dollar_amount, tc.checkAmount)
-        outputTipAmount = app.getString(R.string.dollar_amount,tc.tipAmount)
-        outputTotalDollarAmount = app.getString(R.string.dollar_amount,tc.grandTotal)
+        outputCheckAmount = getApplication<Application>().getString(R.string.dollar_amount, tc.checkAmount)
+        outputTipAmount = getApplication<Application>().getString(R.string.dollar_amount,tc.tipAmount)
+        outputTotalDollarAmount = getApplication<Application>().getString(R.string.dollar_amount,tc.grandTotal)
     }
 
 
