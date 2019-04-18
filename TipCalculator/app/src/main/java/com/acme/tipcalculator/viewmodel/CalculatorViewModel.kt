@@ -9,23 +9,26 @@ import com.acme.tipcalculator.model.TipCalculation
 class CalculatorViewModel @JvmOverloads constructor(
     app: Application, val calculator: RestaurantCalculator = RestaurantCalculator() ) : ObservableViewModel(app) {
 
+    private var lastTipCalculated = TipCalculation()
+
     var inputCheckAmount = ""
     var inputTipPercentage = ""
-    var outputCheckAmount = ""
-    var outputTipAmount = ""
-    var outputTotalDollarAmount = ""
+
+    val outputCheckAmount get() = getApplication<Application>().getString(R.string.dollar_amount, lastTipCalculated.checkAmount)
+    val outputTipAmount get()  = getApplication<Application>().getString(R.string.dollar_amount, lastTipCalculated.tipAmount)
+    val outputTotalDollarAmount get() = getApplication<Application>().getString(R.string.dollar_amount, lastTipCalculated.grandTotal)
+    val locationName get() = lastTipCalculated.locationName
+
 
     init {
-
         updateOutputs(TipCalculation())
-
     }
 
     private fun updateOutputs(tc : TipCalculation){
 
-        outputCheckAmount = getApplication<Application>().getString(R.string.dollar_amount, tc.checkAmount)
-        outputTipAmount = getApplication<Application>().getString(R.string.dollar_amount,tc.tipAmount)
-        outputTotalDollarAmount = getApplication<Application>().getString(R.string.dollar_amount,tc.grandTotal)
+        lastTipCalculated = tc
+        notifyChange()
+
     }
 
 
@@ -36,7 +39,6 @@ class CalculatorViewModel @JvmOverloads constructor(
 
         if(checkAmount != null && tipPct != null){
             updateOutputs(calculator.calculateTip(checkAmount, tipPct))
-            notifyChange()
         }
         clearInputs()
 
@@ -47,8 +49,14 @@ class CalculatorViewModel @JvmOverloads constructor(
         inputCheckAmount="0.00"
         inputTipPercentage="0.00"
         notifyChange()
+    }
 
+    fun saveCurrentTip(name: String){
+        val tipToSave = lastTipCalculated.copy(locationName = name)//current TipCalculation with locationName added
 
+        calculator.saveTipCalculation(tipToSave)
+        updateOutputs(tipToSave)
+        notifyChange()
     }
 
 }

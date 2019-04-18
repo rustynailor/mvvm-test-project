@@ -66,6 +66,34 @@ class CalculatorViewModelTest {
 
     }
 
+    @Test
+    fun testSaveCurrentTip() {
+
+        val stub = TipCalculation(checkAmount = 10.00, tipAmount = 1.5, grandTotal = 11.5)
+
+        fun setupTipCalculation(){
+
+            calculatorViewModel.inputCheckAmount = "10.00"
+            calculatorViewModel.inputTipPercentage = "15"
+
+            `when`(mockCalculator.calculateTip(10.00, 15)).thenReturn(stub)
+
+        }
+
+        setupTipCalculation()
+        calculatorViewModel.calculateTip()
+        calculatorViewModel.saveCurrentTip("Green Eggs and Bacon")
+
+        verify(mockCalculator).saveTipCalculation(stub.copy(locationName = "Green Eggs and Bacon"))
+
+        assertEquals("Green Eggs and Bacon", calculatorViewModel.locationName)
+
+
+
+
+
+    }
+
 
 
 
