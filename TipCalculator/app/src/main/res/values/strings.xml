@@ -7,4 +7,7 @@
     <string name="tip_amount_label">Tip</string>
     <string name="check_label">Check</string>
     <string name="dollar_amount">$%1.02f</string>
+    <string name="cancel_button_text">Cancel</string>
+    <string name="save_button_text">Save</string>
+    <string name="save_dialog_fragment_hint_text">Enter Location</string>
 </resources>
